@@ -1,0 +1,21 @@
+.booking_login_container {
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.booking_login_warning {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 8px;
+    background-color: rgb(255, 0, 0, 0.1);
+    color: #B00020;
+    padding: 16px 16px 0px 16px;
+}
