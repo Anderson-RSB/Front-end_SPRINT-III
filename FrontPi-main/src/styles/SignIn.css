@@ -3,10 +3,35 @@ body {
 }
 
 .login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     height: auto;
     overflow-y: hidden;
     position: relative;
     margin-top: 15vh;
+}
+
+.booking_login_container {
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.booking_login_warning {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 8px;
+    background-color: rgb(255, 0, 0, 0.1);
+    color: #B00020;
+    padding: 16px 16px 0px 16px;
 }
 
 .login_field{
@@ -39,10 +64,10 @@ body {
     border-radius: 8px;
     padding: 8px;
     overflow-x: hidden;
-    -webkit-border-radius:;
-    -moz-border-radius:;
-    -ms-border-radius:;
-    -o-border-radius:;
+    /* -webkit-border-radius:
+    -moz-border-radius:
+    -ms-border-radius:
+    -o-border-radius: */
 }
 
 .btn_login{

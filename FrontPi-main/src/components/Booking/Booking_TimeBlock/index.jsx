@@ -6,7 +6,7 @@ import { Container, Card } from "react-bootstrap";
 
 import { CheckCircle } from "phosphor-react";
 
-function BookingTimeBlock() {
+function BookingTimeBlock({ form, setTime }) {
   return (
     <>
       <Container fluid className="booking_timeblock_container">
@@ -29,6 +29,12 @@ function BookingTimeBlock() {
               id="time"
               defaultValue={"default"}
               aria-required
+              onChange={(e) =>
+                setTime({
+                  ...form,
+                  time: e.target.value,
+                })
+              }
             >
               <option value="default" disabled>
                 Selecione a sua hora de chegada

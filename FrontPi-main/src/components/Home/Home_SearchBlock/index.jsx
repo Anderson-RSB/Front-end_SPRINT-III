@@ -1,5 +1,7 @@
 import React from "react";
 
+import Calendar from "../../Calendar";
+
 function HomeSearchBlock() {
   return (
     <div className="second_header">
@@ -13,6 +15,7 @@ function HomeSearchBlock() {
 
         <div className="input_flex">
           <label htmlFor="date">Check-in</label>
+          {/* <Calendar /> */}
           <input type="date" className="date" placeholder="none" />
         </div>
 

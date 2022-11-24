@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+
+import { Context } from "../../../Context/Context";
 
 import { useFormik } from "formik";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 const login = {
   nome: "Luciano Vilela",
@@ -32,6 +34,12 @@ const validate = (values) => {
 };
 
 const SignInForm = () => {
+  const { carsProducts } = useContext(Context);
+  const location = useLocation();
+  const { id } = useParams();
+
+  const selectedProduct = carsProducts?.find((product) => product?.id == id);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -40,7 +48,11 @@ const SignInForm = () => {
     validate,
     onSubmit: () => {
       localStorage.setItem("nome", login.nome);
-      window.location.href = "/";
+      {
+        location.state
+          ? (window.location.href = `/product/${selectedProduct}/reserve`)
+          : (window.location.href = "/");
+      }
     },
   });
   return (

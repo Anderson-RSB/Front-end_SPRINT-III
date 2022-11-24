@@ -8,12 +8,15 @@ import "./style.css";
 
 import { Container } from "react-bootstrap";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function ProductCalendar({ product }) {
   const { rent } = useContext(Context);
   const result = rent * 300;
   const usuarioLogado = localStorage.getItem("nome");
+
+  const location = useLocation();
+
 
   return (
     <>
@@ -47,11 +50,13 @@ function ProductCalendar({ product }) {
                 </Link>
               ) : (
                 <Link
-                  to={`/product/${product?.id}/reserve/signin`}
+                  state={location.pathname}
+                  to={ "/signin" }
                   className="link_button"
                 >
                   <button className="reserva-btn">Alugue Agora</button>
                 </Link>
+                // `/product/${product?.id}/reserve/signin`
               )}
             </div>
           </div>

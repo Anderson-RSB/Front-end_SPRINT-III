@@ -1,42 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 
-import "./style.css";
+import BookingUserData from "../Booking_UserData";
+import BookingDetails from "../Booking_Details";
+import BookingCalendar from "../Booking_Calendar";
+import BookingTimeBlock from "../Booking_TimeBlock";
 
 import { useFormik } from "formik";
 
-import { Container, Card } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 const validate = (values) => {
   const errors = {};
-
-  if (!values.name) {
-    errors.name = "Obrigatório";
-  }
-
-  if (!values.last_name) {
-    errors.last_name = "Obrigatório";
-  }
-
-  if (!values.email) {
-    errors.email = "Obrigatório";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email address";
-  }
 
   if (!values.city) {
     errors.city = "Obrigatório";
   }
 
+  if (!values.checkin) {
+    errors.checkin = "Obrigatório";
+  }
+
+  if (!values.checkout) {
+    errors.checkout = "Obrigatório";
+  }
+
+  if (!values.time) {
+    errors.time = "Obrigatório";
+  }
+
   return errors;
 };
 
-const BookingForm = () => {
+function BookingForm({ products }) {
+  function submit() {
+    if (
+      form.city == "" ||
+      form.checkin == "" ||
+      form.checkout == "" ||
+      form.time == ""
+    ) {
+      alert("Preencha todos os dados...");
+    } else {
+      window.location.href = "/reserve-done";
+    }
+  }
+
+  // window.location.href = "/reserve-done";
+
   const formik = useFormik({
     initialValues: {
       name: "",
       last_name: "",
       email: "",
       city: "",
+      checkin: "",
+      checkout: "",
+      time: "",
     },
     validate,
     onSubmit: (values) => {
@@ -44,88 +63,34 @@ const BookingForm = () => {
     },
   });
 
+  const [form, setForm] = useState({
+    city: "",
+    checkin: "",
+    checkout: "",
+    time: "",
+  });
+
   return (
     <>
-      <Container fluid className="booking_form_container">
-        <form onSubmit={formik.handleSubmit} className="booking_form">
-          <Card className="booking_form_card">
-            {/* <div className="reservation_form_input"> */}
+      <form onSubmit={formik.handleSubmit}>
+        <Container fluid className="booking_container">
+          <div className="booking_form_title">
+            <h1>Complete seus dados</h1>
+          </div>
 
-            <div className="booking_form_input-name">
-              <label htmlFor="name">Nome</label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                placeholder=""
-                disabled
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.name}
-              />
-              {/* {formik.touched.name && formik.errors.name ? (
-                  <div className="error">{formik.errors.name}</div>
-                ) : null} */}
-            </div>
-
-            <div className="booking_form_input-lastname">
-              <label htmlFor="last_name">Sobrenome</label>
-              <input
-                id="last_name"
-                name="last_name"
-                type="text"
-                placeholder=""
-                disabled
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.last_name}
-              />
-              {/* {formik.touched.last_name && formik.errors.last_name ? (
-                  <div className="error">{formik.errors.last_name}</div>
-                ) : null} */}
-            </div>
-
-            <div className="booking_form_input-email">
-              <label htmlFor="email">Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder=""
-                disabled
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
-              />
-              {/* {formik.touched.email && formik.errors.email ? (
-                  <div className="error">{formik.errors.email}</div>
-                ) : null} */}
-            </div>
-
-            <div className="booking_form_input-city">
-              <label htmlFor="city">Cidade</label>
-              <input
-                id="city"
-                name="city"
-                type="city"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.city}
-              />
-              {formik.touched.city && formik.errors.city ? (
-                <div className="error">{formik.errors.city}</div>
-              ) : null}
-            </div>
-            {/* </div> */}
-          </Card>
-
-          {/* <button className="reservation_form_button" type="submit">
-              Submit
-            </button> */}
-        </form>
-      </Container>
+          <BookingUserData form={form} setCity={setForm} />
+          <BookingDetails
+            products={products}
+            form={form}
+            setDate={setForm}
+            submit={submit}
+          />
+          <BookingCalendar />
+          <BookingTimeBlock form={form} setTime={setForm} />
+        </Container>
+      </form>
     </>
   );
-};
+}
 
 export default BookingForm;

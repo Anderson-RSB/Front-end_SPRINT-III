@@ -1,12 +1,37 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+
+import { Context } from "../../../Context/Context";
 
 import "./style.css";
+
+import { format } from "date-fns";
 
 import { Container, Card } from "react-bootstrap";
 
 import { MapPin } from "phosphor-react";
 
-function BookingDetails({ products }) {
+function BookingDetails({ products, form, setDate, submit }) {
+  const { calendar } = useContext(Context);
+
+  const startDate = calendar?.map((date) => {
+    return format(date?.startDate, "dd/MM/yyyy");
+  });
+
+  const endDate = calendar?.map((date) => {
+    return format(date.endDate, "dd/MM/yyyy");
+  });
+
+  const newFormatStartDate = startDate[0];
+  const newFormatEndDate = endDate[0];
+
+  useEffect(() => {
+    setDate({
+      ...form,
+      checkin: newFormatStartDate,
+      checkout: newFormatEndDate,
+    });
+  }, [newFormatStartDate, newFormatEndDate]);
+
   return (
     <>
       <Container fluid className="booking_details_container">
@@ -42,17 +67,17 @@ function BookingDetails({ products }) {
             <Container fluid className="booking_details_info-check">
               <div className="booking_details_info-checkin">
                 <h4>Check in</h4>
-                <h4>___/___/___</h4>
+                <h4 >{startDate}</h4>
               </div>
 
               <div className="booking_details_info-line"></div>
 
               <div className="booking_details_info-checkout">
                 <h4>Check out</h4>
-                <h4>___/___/___</h4>
+                <h4 >{endDate}</h4>
               </div>
 
-              <button className="booking_details_info-button">
+              <button className="booking_details_info-button" onClick={() => {submit}}>
                 Confirmar reserva
               </button>
             </Container>

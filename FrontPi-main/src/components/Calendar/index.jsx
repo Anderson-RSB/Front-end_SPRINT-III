@@ -28,6 +28,8 @@ function Calendar() {
     return () => window.removeEventListener("resize", listener);
   }, [months]);
 
+  console.log(calendar);
+
   return (
     <>
       <Card className="calendar_container_card">
