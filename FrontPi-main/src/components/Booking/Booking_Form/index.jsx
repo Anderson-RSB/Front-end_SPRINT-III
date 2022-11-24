@@ -32,7 +32,9 @@ const validate = (values) => {
 };
 
 function BookingForm({ products }) {
+
   function submit() {
+    console.log("Chamada da função");
     if (
       form.city == "" ||
       form.checkin == "" ||

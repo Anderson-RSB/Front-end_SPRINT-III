@@ -77,7 +77,7 @@ function BookingDetails({ products, form, setDate, submit }) {
                 <h4 >{endDate}</h4>
               </div>
 
-              <button className="booking_details_info-button" onClick={() => {submit}}>
+              <button className="booking_details_info-button" onClick={() => {submit()}}>
                 Confirmar reserva
               </button>
             </Container>
