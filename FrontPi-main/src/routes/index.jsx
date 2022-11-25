@@ -17,13 +17,15 @@ import Footer from "../components/Footer";
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 
 const RouteList = () => {
-  const usuarioLogado = localStorage.getItem("nome");
+  const usuarioLogado = localStorage.getItem("token");
 
-  const { carsProducts, carsImage } = useContext(Context);
+  const { dataUser, carsProducts, carsImage } = useContext(Context);
 
   const { id } = useParams();
 
   const selectedProduct = carsProducts?.find((product) => product?.id == id);
+
+  console.log(dataUser)
 
   return (
     <>
@@ -31,7 +33,7 @@ const RouteList = () => {
         <BrowserRouter>
           <header>
             {usuarioLogado ? (
-              <SecondaryHeader nomeUsuario={usuarioLogado} />
+              <SecondaryHeader />
             ) : (
               <MainHeader product={selectedProduct}/>
             )}

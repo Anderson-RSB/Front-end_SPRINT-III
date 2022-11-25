@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+
+import { Context } from "../../../Context/Context";
 
 import Logo from "../../../assets/logo_gocar.png";
 
@@ -10,7 +12,8 @@ import { Link } from "react-router-dom";
 
 import { SignOut } from "phosphor-react";
 
-function SecondaryHeader({ nomeUsuario }) {
+function SecondaryHeader() {
+  const { dataUser } = useContext(Context);
   const [autenticacao, setAutenticacao] = useState("");
 
   useEffect(() => {}, [autenticacao]);
@@ -19,6 +22,8 @@ function SecondaryHeader({ nomeUsuario }) {
     localStorage.clear();
     setAutenticacao("logout");
   }
+
+  console.log(dataUser);
 
   return (
     <>
@@ -39,7 +44,7 @@ function SecondaryHeader({ nomeUsuario }) {
           <div className="user_autenticado">
             <div className="user_options">
               <div className="welcome_text">
-                <p>Olá, {nomeUsuario} </p>
+                <p>Olá, {dataUser?.name} {dataUser?.lastname} </p>
               </div>
               <button
                 className="logout"
@@ -52,7 +57,8 @@ function SecondaryHeader({ nomeUsuario }) {
                   <SignOut size={25} />
                 </a>{" "}
               </button>
-              <button className="perfil">{nomeUsuario.substr(0, 1)}</button>
+              <button className="perfil"></button>
+              {/* {nomeUsuario.substr(0, 1)} */}
             </div>
           </div>
         </Navbar>

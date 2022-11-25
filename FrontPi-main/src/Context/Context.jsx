@@ -3,6 +3,10 @@ import React, { createContext, useState, useEffect } from "react";
 export const Context = createContext({});
 
 const ContextProvider = ({ children }) => {
+  const [dataUser, setDataUser] = useState([{
+    name: null,
+    lastname: null,
+  }]);
   const [cars, setCars] = useState([]);
   const [carsImage, setCarsImage] = useState([]);
   const [carsProducts, setcarsProducts] = useState([]);
@@ -17,7 +21,7 @@ const ContextProvider = ({ children }) => {
   const [rent, setRent] = useState();
 
   // Cars
-  const urlCategories = "http://52.90.140.192:8081/categories";
+  const urlCategories = "http://54.159.110.183:8081/categories";
   useEffect(() => {
     fetch(urlCategories)
       .then((responseCars) => responseCars.json())
@@ -25,7 +29,7 @@ const ContextProvider = ({ children }) => {
   }, []);
 
   // Products
-  const urlProducts = "http://52.90.140.192:8081/products";
+  const urlProducts = "http://54.159.110.183:8081/products";
   useEffect(() => {
     fetch(urlProducts)
       .then((responseCars) => responseCars.json())
@@ -33,7 +37,7 @@ const ContextProvider = ({ children }) => {
   }, []);
 
   // Images
-  const urlImages = "http://52.90.140.192:8081/images";
+  const urlImages = "http://54.159.110.183:8081/images";
   // useEffect(() => {
   //     fetch(urlImages)
   //         .then(responseCars => responseCars.json())
@@ -87,6 +91,8 @@ const ContextProvider = ({ children }) => {
   return (
     <Context.Provider
       value={{
+        dataUser,
+        setDataUser,
         cars,
         setCars,
         carsImage,

@@ -7,9 +7,8 @@ import { useFormik } from "formik";
 import { Link, useLocation, useParams } from "react-router-dom";
 
 const login = {
-  nome: "Luciano Vilela",
-  email: "luciano@email.com",
-  password: "123456",
+  name: null,
+  lastname: null,
 };
 
 const validate = (values) => {
@@ -19,22 +18,24 @@ const validate = (values) => {
     errors.email = "Obrigatório";
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = "Email Inválido";
-  } else if (values.email != login.email) {
-    errors.email = "Por favor tente novamente, suas credenciais são inválidas";
   }
+  // else if (values.email != login.email) {
+  //   errors.email = "Por favor tente novamente, suas credenciais são inválidas";
+  // }
 
   if (!values.password) {
     errors.password = "Obrigatório";
-  } else if (values.password != login.password) {
-    errors.password =
-      "Por favor tente novamente, suas credenciais são inválidas";
   }
+  // else if (values.password != login.password) {
+  //   errors.password =
+  //     "Por favor tente novamente, suas credenciais são inválidas";
+  // }
 
   return errors;
 };
 
 const SignInForm = () => {
-  const { carsProducts } = useContext(Context);
+  const { dataUser, setDataUser, carsProducts } = useContext(Context);
   const location = useLocation();
   const { id } = useParams();
 
@@ -46,15 +47,46 @@ const SignInForm = () => {
       password: "",
     },
     validate,
-    onSubmit: () => {
-      localStorage.setItem("nome", login.nome);
-      {
-        location.state
-          ? (window.location.href = `/product/${selectedProduct}/reserve`)
-          : (window.location.href = "/");
-      }
+    onSubmit: (values) => {
+      fetch(`http://54.159.110.183:8081/api/auth/signin`, {
+        method: "POST",
+        headers: {
+          Accept: "*/* , application/json, text/plain ",
+          "Content-Type": "application/json",
+          // "authorization": `${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          username: `${values.email}`,
+          password: `${values.password}`,
+        }),
+      }).then((res) => {
+        console.log(res);
+        if (!res.ok) {
+          throw Error(res.statusText);
+        } else {
+          res.json()
+          .then((data) => {
+
+            console.log(data);  
+
+            localStorage.setItem("token", data.token);
+
+            setDataUser({
+              name: data.name,
+              lastname: data.lastname
+            });
+
+          });
+          setTimeout(() => {
+            location.state
+              ? (window.location.href = `/product/${selectedProduct}/reserve`)
+              : (window.location.href = "/");
+          }, 10000);
+        }
+      });
     },
   });
+
   return (
     <div>
       <form onSubmit={formik.handleSubmit} className="signup_form">

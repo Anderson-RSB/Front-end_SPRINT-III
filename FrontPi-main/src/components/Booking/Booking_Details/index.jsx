@@ -67,17 +67,22 @@ function BookingDetails({ products, form, setDate, submit }) {
             <Container fluid className="booking_details_info-check">
               <div className="booking_details_info-checkin">
                 <h4>Check in</h4>
-                <h4 >{startDate}</h4>
+                <h4>{startDate}</h4>
               </div>
 
               <div className="booking_details_info-line"></div>
 
               <div className="booking_details_info-checkout">
                 <h4>Check out</h4>
-                <h4 >{endDate}</h4>
+                <h4>{endDate}</h4>
               </div>
 
-              <button className="booking_details_info-button" onClick={() => {submit()}}>
+              <button
+                className="booking_details_info-button"
+                onClick={() => {
+                  submit();
+                }}
+              >
                 Confirmar reserva
               </button>
             </Container>
