@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Calendar from "../../Calendar";
 
+import { Container } from "react-bootstrap";
+
+import { CalendarPlus, ArrowCircleUp } from "phosphor-react";
+
 function HomeSearchBlock() {
+  const [expand, setExpand] = useState(false);
+
+  function showCalendar() {
+    setExpand(!expand);
+    console.log("botão funcionando");
+  }
+
   return (
     <div className="second_header">
       <h2>Faça sua reserva</h2>
@@ -14,14 +25,11 @@ function HomeSearchBlock() {
         </div>
 
         <div className="input_flex">
-          <label htmlFor="date">Check-in</label>
-          {/* <Calendar /> */}
-          <input type="date" className="date" placeholder="none" />
-        </div>
-
-        <div className="input_flex">
-          <label htmlFor="date">Check-out</label>
-          <input type="date" className="date" placeholder="none" />
+          <div className="selecione">Selecione</div>
+          <button className="date" onClick={showCalendar}>
+            {" "}
+            Check-in / Check-out <CalendarPlus size={30} color="#F55E00" />{" "}
+          </button>
         </div>
 
         <div className="input_flex">
@@ -29,6 +37,13 @@ function HomeSearchBlock() {
           <button className="btn_header">Buscar</button>
         </div>
       </div>
+
+      <Container fluid className={`box ${expand ? " " : "hide"}`}>
+        <div className="seta" onClick={showCalendar}>
+          <ArrowCircleUp size={45} />
+        </div>
+        <Calendar />
+      </Container>
     </div>
   );
 }
