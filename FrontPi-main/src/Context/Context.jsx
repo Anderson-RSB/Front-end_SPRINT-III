@@ -3,10 +3,7 @@ import React, { createContext, useState, useEffect } from "react";
 export const Context = createContext({});
 
 const ContextProvider = ({ children }) => {
-  const [dataUser, setDataUser] = useState([{
-    name: null,
-    lastname: null,
-  }]);
+  const [dataUser, setDataUser] = useState({});
   const [cars, setCars] = useState([]);
   const [carsImage, setCarsImage] = useState([]);
   const [carsProducts, setcarsProducts] = useState([]);

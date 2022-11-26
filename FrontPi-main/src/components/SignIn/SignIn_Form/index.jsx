@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 import { Context } from "../../../Context/Context";
 
@@ -9,6 +9,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 const login = {
   name: null,
   lastname: null,
+  email: null,
 };
 
 const validate = (values) => {
@@ -19,23 +20,23 @@ const validate = (values) => {
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = "Email Inválido";
   }
-  // else if (values.email != login.email) {
-  //   errors.email = "Por favor tente novamente, suas credenciais são inválidas";
-  // }
 
   if (!values.password) {
     errors.password = "Obrigatório";
   }
-  // else if (values.password != login.password) {
-  //   errors.password =
-  //     "Por favor tente novamente, suas credenciais são inválidas";
-  // }
 
   return errors;
 };
 
 const SignInForm = () => {
   const { dataUser, setDataUser, carsProducts } = useContext(Context);
+  
+  const [ selectUser, setSelectUser ] = useState({
+    name: null,
+    lastname: null,
+    email: null,
+  });
+
   const location = useLocation();
   const { id } = useParams();
 
@@ -67,25 +68,28 @@ const SignInForm = () => {
           res.json()
           .then((data) => {
 
-            console.log(data);  
-
             localStorage.setItem("token", data.token);
 
-            setDataUser({
-              name: data.name,
-              lastname: data.lastname
-            });
+            login.name = data.name;
+            login.lastname = data.lastname;
+            login.email = data.username;
 
           });
           setTimeout(() => {
             location.state
               ? (window.location.href = `/product/${selectedProduct}/reserve`)
               : (window.location.href = "/");
-          }, 10000);
+          }, 5000);
         }
       });
     },
   });
+
+  useEffect(() => {
+    setDataUser({login})
+  }, [login]);
+
+  console.log(login);
 
   return (
     <div>
