@@ -5,13 +5,13 @@ import { Context } from "../../../Context/Context";
 import { Link } from "react-router-dom";
 
 function HomeCards() {
-  const { carsImage, carsProducts } = useContext(Context);
-  const id = [43, 37, 31, 13, 25, 19, 7, 1];
-  const image = carsImage?.filter((carsImage) => id.includes(carsImage.id));
+  const { products, productImages } = useContext(Context);
+  const ids = [43, 37, 31, 13, 25, 19, 7, 1];
+  const images = productImages?.filter((url) => ids.includes(url.id));
 
-  let carros = carsProducts.map((cars) => {
+  let product = products.map((cars) => {
     const names = cars.name.split(" ");
-    const fotos = image.find((fotos) => fotos.title.includes(names[0]));
+    const fotos = images.find((fotos) => fotos.title.includes(names[0]));
     return { ...cars, urlImage: fotos?.urlImage };
   });
 
@@ -19,8 +19,8 @@ function HomeCards() {
     <>
       <div className="galeria_carro">
         {" "}
-        {carros?.map((car) => (
-          <div key={image.id} className="card_main">
+        {product?.map((car) => (
+          <div key={images.id} className="card_main">
             <div className="card_image">
               {" "}
               <img src={car?.urlImage} alt="" />{" "}

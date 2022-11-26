@@ -17,7 +17,7 @@ import { ShareNetwork, Heart } from "phosphor-react";
 
 function Product() {
   //Informações que vem da API
-  const { carsProducts, carsImage } = useContext(Context);
+  const { products, productImages } = useContext(Context);
   // Id do Produto/Parâmetro
   const { id } = useParams();
   //Mudança de estado de acordo com o tamanho da tela
@@ -33,9 +33,9 @@ function Product() {
   }, [isMobile]);
 
   // Filtro a partir do click
-  const selectedProduct = carsProducts?.find((product) => product?.id == id);
+  const selectedProduct = products?.find((product) => product?.id == id);
 
-  const imagesProduct = carsImage?.filter((images) => {
+  const imagesProduct = productImages?.filter((images) => {
     const name = selectedProduct?.name?.split(" ");
     return images?.title?.includes(name[0]);
   });

@@ -5,12 +5,13 @@ import { Context } from "../../../Context/Context";
 import "./style.css";
 
 function HomeCategories() {
-  const { cars } = useContext(Context);
+  const { categories } = useContext(Context);
+
   return (
     <div className="categories">
       <h3 className="categories_title">Categorias</h3>
       <div className="categories_cards">
-        {cars?.map((categories) => (
+        {categories?.map((categories) => (
           <div key={categories.id} className="card_category">
             <div className="category_img">
               {" "}

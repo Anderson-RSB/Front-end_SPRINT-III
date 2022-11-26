@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+
+import { Context } from "../../../Context/Context";
 
 import "../Product_Modal/style.css";
+
+import { useParams } from "react-router-dom";
 
 import { Modal } from "react-bootstrap";
 
@@ -8,11 +12,15 @@ import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 
 function ProductModal(props) {
-  const productImages = props.products.map((prodImages) => {
+  const { products } = useContext(Context);
+  const { id } = useParams();
+  const selectedProduct = products?.find((product) => product?.id == id);
+
+  const productImage = props.products.map((prodImages) => {
     return prodImages.urlImage;
   });
 
-  const urlImages = productImages.map((imagesLib) => {
+  const urlImage = productImage.map((imagesLib) => {
     return {
       original: imagesLib,
       thumbnail: imagesLib,
@@ -38,12 +46,12 @@ function ProductModal(props) {
             id="contained-modal-title-vcenter "
             className=" text-dark"
           >
-            Audi
+            {selectedProduct?.name}
           </Modal.Title>
         </Modal.Header>
 
         <Modal.Body className="boxModal bg-white bg-gradient-white text-light">
-          <ImageGallery autoPlay="true" items={urlImages} />
+          <ImageGallery autoPlay="true" items={urlImage} />
         </Modal.Body>
       </Modal>
     </>

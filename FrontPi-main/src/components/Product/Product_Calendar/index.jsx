@@ -13,7 +13,7 @@ import { Link, useLocation } from "react-router-dom";
 function ProductCalendar({ product }) {
   const { rent } = useContext(Context);
   const result = rent * 300;
-  const usuarioLogado = localStorage.getItem("nome");
+  const usuarioLogado = localStorage.getItem("token");
 
   const location = useLocation();
 

@@ -19,11 +19,11 @@ import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 const RouteList = () => {
   const usuarioLogado = localStorage.getItem("token");
 
-  const { dataUser, carsProducts, carsImage } = useContext(Context);
+  const { dataUser, products } = useContext(Context);
 
   const { id } = useParams();
 
-  const selectedProduct = carsProducts?.find((product) => product?.id == id);
+  const selectedProduct = products?.find((product) => product?.id == id);
 
   console.log(dataUser)
 

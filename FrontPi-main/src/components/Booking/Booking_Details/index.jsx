@@ -4,14 +4,37 @@ import { Context } from "../../../Context/Context";
 
 import "./style.css";
 
+import { useParams } from "react-router-dom";
+
 import { format } from "date-fns";
 
 import { Container, Card } from "react-bootstrap";
 
 import { MapPin } from "phosphor-react";
 
-function BookingDetails({ products, form, setDate, submit }) {
-  const { calendar } = useContext(Context);
+function BookingDetails({ product, form, setDate, submit }) {
+  const { calendar, products, productImages } = useContext(Context);
+  const { id } = useParams();
+  const ids = [43, 37, 31, 13, 25, 19, 7, 1];
+  const images = productImages?.filter((url) => ids.includes(url.id));
+
+  let selectedProduct = products.map((cars) => {
+    const names = cars.name.split(" ");
+    const fotos = images.find((fotos) => fotos.title.includes(names[0]));
+    return { ...cars, urlImage: fotos?.urlImage };
+  });
+
+  const selectedImage = selectedProduct.map((product) => {
+    if(product.id == id) {
+      return product.urlImage;
+    }
+  });
+
+  // const image = selectedImage?.filter((carsImage) => carsImage.includes(carsImage.id==id));
+
+  console.log(selectedImage);
+  // console.log(image);
+
 
   const startDate = calendar?.map((date) => {
     return format(date?.startDate, "dd/MM/yyyy");
@@ -23,6 +46,8 @@ function BookingDetails({ products, form, setDate, submit }) {
 
   const newFormatStartDate = startDate[0];
   const newFormatEndDate = endDate[0];
+
+
 
   useEffect(() => {
     setDate({
@@ -41,26 +66,28 @@ function BookingDetails({ products, form, setDate, submit }) {
           </div>
 
           <div className="booking_details_card_image">
+  
             <img
-              src="https://turismo.praiagrande.sp.gov.br/wp-content/uploads/2021/07/construcao.png"
+              src={selectedImage}
               alt=""
             />
+       
           </div>
 
           <Container fluid className="booking_details_info_container">
             <div className="booking_details_info-product">
               <h4 className="booking_details_info_title-category">
-                {products?.category?.qualification}
+                {product?.category?.qualification}
               </h4>
               <h2 className="booking_details_info_title-product">
-                {products?.name}
+                {product?.name}
               </h2>
             </div>
 
             <div className="booking_details_info-location">
               <h5 className="booking_details_info_title-location">
-                <MapPin size={24} /> {products?.city?.name},{" "}
-                {products?.city?.country}
+                <MapPin size={24} /> {product?.city?.name},{" "}
+                {product?.city?.country}
               </h5>
             </div>
 

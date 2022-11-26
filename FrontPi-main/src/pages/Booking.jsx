@@ -17,9 +17,9 @@ import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 function Booking() {
-  const { carsProducts, carsImage } = useContext(Context);
+  const { products, carsImage } = useContext(Context);
   const { id } = useParams();
-  const selectedProduct = carsProducts?.find((product) => product?.id == id);
+  const selectedProduct = products?.find((product) => product?.id == id);
 
   const funct = () => {
     console.log("função do booking");

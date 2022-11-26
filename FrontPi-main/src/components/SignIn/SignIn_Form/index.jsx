@@ -29,7 +29,7 @@ const validate = (values) => {
 };
 
 const SignInForm = () => {
-  const { dataUser, setDataUser, carsProducts } = useContext(Context);
+  const { dataUser, setDataUser, products } = useContext(Context);
   
   const [ selectUser, setSelectUser ] = useState({
     name: null,
@@ -40,7 +40,7 @@ const SignInForm = () => {
   const location = useLocation();
   const { id } = useParams();
 
-  const selectedProduct = carsProducts?.find((product) => product?.id == id);
+  const selectedProduct = products?.find((product) => product?.id == id);
 
   const formik = useFormik({
     initialValues: {
@@ -79,7 +79,7 @@ const SignInForm = () => {
             location.state
               ? (window.location.href = `/product/${selectedProduct}/reserve`)
               : (window.location.href = "/");
-          }, 5000);
+          }, 2000);
         }
       });
     },

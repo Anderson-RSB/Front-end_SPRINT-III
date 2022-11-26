@@ -82,7 +82,7 @@ function BookingForm({ products }) {
 
           <BookingUserData form={form} setCity={setForm} />
           <BookingDetails
-            products={products}
+            product={products}
             form={form}
             setDate={setForm}
             submit={submit}
